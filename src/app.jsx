@@ -1,11 +1,29 @@
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Body from "./components/Body";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Cart from "./components/Cart";
+
 
 export function App() {
   
 
   return (
     <>
-      <div> Hello world </div>
+      
+      <BrowserRouter basename="/">
+          <Routes>
+            <Route path="/" element= {<Body/>}>
+              <Route path="/login" element = {<Login/>}/>
+              <Route path="/register" element = {<Register/>}/>
+              <Route path="/cart" element = {<Cart/>}/>
+            
+            
+            </Route>
+          </Routes>
+      
+      </BrowserRouter>
     </>
   )
 }

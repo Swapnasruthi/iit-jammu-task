@@ -11,10 +11,13 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
     "preact": "^10.27.0",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.2",
     "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.2",
+    "daisyui": "^5.1.6",
     "vite": "^7.1.2"
   }
 }
