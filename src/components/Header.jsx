@@ -1,7 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+
+  const cartData = useSelector((store) => store.cart);
+  const cartLength = cartData?.items?.length
+
+  // console.log(cartData?.items?.length);
   return (
     <>
       <div className="navbar bg-base-100 shadow-xl px-10">
@@ -41,7 +47,7 @@ const Header = () => {
                     />{" "}
                   </svg>
 
-                  <span className="badge badge-sm indicator-item">10</span>
+                  <span className="badge badge-sm indicator-item">{cartLength}</span>
                 </div>
               
             </div>

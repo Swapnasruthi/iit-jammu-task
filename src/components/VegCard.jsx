@@ -1,7 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const VegCard = (data) => {
-  // console.log(data);
+  // the data is coming from feed component as props named data.item
+
+  const dispatch = useDispatch();
+
+  const addVeggie = (item) =>{
+    dispatch(addItem(item));
+  }
 
   return (
     <>
@@ -29,7 +37,7 @@ const VegCard = (data) => {
           </p>
           <div className="card-actions justify-end">
             <button 
-            onClick={() => (console.log(data.item))}
+            onClick={() => (addVeggie(data.item))}
             className="btn btn-primary">Add</button>
           </div>
         </div>
