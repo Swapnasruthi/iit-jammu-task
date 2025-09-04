@@ -4,7 +4,7 @@ import Body from "./components/Body";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Cart from "./components/Cart";
-
+import Feed from "./components/feed";
 
 export function App() {
   
@@ -17,6 +17,7 @@ export function App() {
             <Route path="/" element= {<Body/>}>
               <Route path="/login" element = {<Login/>}/>
               <Route path="/register" element = {<Register/>}/>
+              <Route path="/" element = {<Feed/>}/>
               <Route path="/cart" element = {<Cart/>}/>
             
             

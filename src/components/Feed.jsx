@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import mockData from "../data/mock_Data.json"
+import VegCard from "./VegCard";
 
-const feed = () => {
+const Feed = () => {
+
+  // console.log(mockData);
+
+
   return (
-    <div>feed</div>
-  )
-}
+    <>
+      <div className="w-full flex flex-row flex-wrap justify-center items-center mt-20">
+        {mockData.map((item) => (
+           
+            <VegCard  key={item.id} item={item}/>
+        ))}
+      </div>
+    </>
+  );
+};
 
-export default feed
+export default Feed;

@@ -1,0 +1,177 @@
+[
+    {
+        "id": 1,
+        "name": "Beans, Brinjals & Okra",
+        "slug": "beans-brinjals-okra",
+        "url": "pc/fruits-vegetables/fresh-vegetables/beans-brinjals-okra",
+        "level": 2,
+        "bannersList": [],
+        "children": [],
+        "image": "https://www.bbassets.com/media/uploads/category_images/nr/beans-brinjals-okra_nr_1.png",
+        "dest_type": "product_list",
+        "dest_slug": "type=pc&slug=beans-brinjals-okra",
+        "type": "pc",
+        "price": {
+            "min": 25,
+            "max": 120,
+            "currency": "INR",
+            "unit": "per kg"
+        },
+        "deliveryTime": {
+            "standard": "2-4 hours",
+            "express": "30-60 mins"
+        },
+        "brand": "Fresh Farm",
+        "quantity": {
+            "available": true,
+            "units": ["250g", "500g", "1kg", "2kg"],
+            "defaultUnit": "500g"
+        }
+    },
+    {
+        "id": 2,
+        "name": "Cabbage & Cauliflower",
+        "slug": "cabbage-cauliflower",
+        "url": "pc/fruits-vegetables/fresh-vegetables/cabbage-cauliflower",
+        "level": 2,
+        "bannersList": [],
+        "children": [],
+        "image": "https://www.bbassets.com/media/uploads/category_images/nr/cabbage-cauliflower_nr_1.png",
+        "dest_type": "product_list",
+        "dest_slug": "type=pc&slug=cabbage-cauliflower",
+        "type": "pc",
+        "price": {
+            "min": 18,
+            "max": 85,
+            "currency": "INR",
+            "unit": "per kg"
+        },
+        "deliveryTime": {
+            "standard": "2-4 hours",
+            "express": "30-60 mins"
+        },
+        "brand": "Green Valley",
+        "quantity": {
+            "available": true,
+            "units": ["500g", "1kg", "2kg", "5kg"],
+            "defaultUnit": "1kg"
+        }
+    },
+    {
+        "id": 3,
+        "name": "Cucumber & Capsicum",
+        "slug": "cucumber-capsicum",
+        "url": "pc/fruits-vegetables/fresh-vegetables/cucumber-capsicum",
+        "level": 2,
+        "bannersList": [],
+        "children": [],
+        "image": "https://www.bbassets.com/media/uploads/category_images/nr/cucumber-capsicum_nr_1.png",
+        "dest_type": "product_list",
+        "dest_slug": "type=pc&slug=cucumber-capsicum",
+        "type": "pc",
+        "price": {
+            "min": 30,
+            "max": 150,
+            "currency": "INR",
+            "unit": "per kg"
+        },
+        "deliveryTime": {
+            "standard": "2-4 hours",
+            "express": "30-60 mins"
+        },
+        "brand": "Fresh Farm",
+        "quantity": {
+            "available": true,
+            "units": ["250g", "500g", "1kg"],
+            "defaultUnit": "500g"
+        }
+    },
+    {
+        "id": 4,
+        "name": "Gourd, Pumpkin, Drumstick",
+        "slug": "gourd-pumpkin-drumstick",
+        "url": "pc/fruits-vegetables/fresh-vegetables/gourd-pumpkin-drumstick",
+        "level": 2,
+        "bannersList": [],
+        "children": [],
+        "image": "https://www.bbassets.com/media/uploads/category_images/nr/gourd-pumpkin-drumstick_nr_1.png",
+        "dest_type": "product_list",
+        "dest_slug": "type=pc&slug=gourd-pumpkin-drumstick",
+        "type": "pc",
+        "price": {
+            "min": 20,
+            "max": 95,
+            "currency": "INR",
+            "unit": "per kg"
+        },
+        "deliveryTime": {
+            "standard": "2-4 hours",
+            "express": "30-60 mins"
+        },
+        "brand": "Organic Harvest",
+        "quantity": {
+            "available": true,
+            "units": ["500g", "1kg", "2kg", "3kg"],
+            "defaultUnit": "1kg"
+        }
+    },
+    {
+        "id": 5,
+        "name": "Leafy Vegetables",
+        "slug": "leafy-vegetables",
+        "url": "pc/fruits-vegetables/fresh-vegetables/leafy-vegetables",
+        "level": 2,
+        "bannersList": [],
+        "children": [],
+        "image": "https://www.bbassets.com/media/uploads/category_images/nr/leafy-vegetables_nr_1.png",
+        "dest_type": "product_list",
+        "dest_slug": "type=pc&slug=leafy-vegetables",
+        "type": "pc",
+        "price": {
+            "min": 15,
+            "max": 80,
+            "currency": "INR",
+            "unit": "per bunch"
+        },
+        "deliveryTime": {
+            "standard": "1-3 hours",
+            "express": "30-45 mins"
+        },
+        "brand": "Green Valley",
+        "quantity": {
+            "available": true,
+            "units": ["1 bunch", "2 bunches", "250g", "500g"],
+            "defaultUnit": "1 bunch"
+        }
+    },
+  
+    {
+        "id": 6,
+        "name": "Potato, Onion & Tomato",
+        "slug": "potato-onion-tomato",
+        "url": "pc/fruits-vegetables/fresh-vegetables/potato-onion-tomato",
+        "level": 2,
+        "bannersList": [],
+        "children": [],
+        "image": "https://www.bbassets.com/media/uploads/category_images/nr/potato-onion-tomato_nr_1.png",
+        "dest_type": "product_list",
+        "dest_slug": "type=pc&slug=potato-onion-tomato",
+        "type": "pc",
+        "price": {
+            "min": 12,
+            "max": 65,
+            "currency": "INR",
+            "unit": "per kg"
+        },
+        "deliveryTime": {
+            "standard": "2-4 hours",
+            "express": "30-60 mins"
+        },
+        "brand": "Fresh Farm",
+        "quantity": {
+            "available": true,
+            "units": ["1kg", "2kg", "5kg", "10kg"],
+            "defaultUnit": "2kg"
+        }
+    }
+]
