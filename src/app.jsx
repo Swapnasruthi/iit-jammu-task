@@ -3,7 +3,7 @@ import Body from "./components/Body";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Cart from "./components/Cart";
-import Feed from "./components/feed";
+import Feed from "./components/Feed";
 import { Provider } from "react-redux";
 import store from "./utils/store";
 
