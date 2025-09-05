@@ -1,13 +1,63 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { BACKEND_API } from "../utils/Contants";
+import { useNavigate } from "react-router-dom";
+import { clearCart } from "../utils/cartSlice";
+import { removeUser } from "../utils/userSlice";
 
 const Header = () => {
 
   const cartData = useSelector((store) => store.cart);
-  const cartLength = cartData?.items?.length
+  const [cartLength, setCartLength] = useState(cartData?.items?.length || 0);
+  const userData = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  const userId = userData?._id;
+  const dispatch = useDispatch();
 
-  // console.log(cartData?.items?.length);
+
+  const logout = async() => {
+     try {
+    const res = await axios.post(
+      BACKEND_API + "/logout",
+      {},
+      { withCredentials: true }
+    );
+
+    if (res.status === 200) {
+      console.log("Logout successful:", res.data.message);
+      dispatch(clearCart());
+      dispatch(removeUser());
+      navigate("/login");
+    } else {
+      console.log("Unexpected response:", res);
+    }
+  } catch (err) {
+    console.log("error while log outing");
+  }
+  }
+  const fetchCartItems = async () => {
+    if (!userId) return;
+    try {
+      const res = await axios.get(BACKEND_API+ "/cart/" + userId, {
+        withCredentials: true,
+      });
+      if (res) {
+        const items = res.data;
+        setCartLength(items.length); 
+      }
+    } catch (err) {
+      console.log("Failed to fetch cart items" + err.message);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      fetchCartItems();
+    }
+  }, [userId, cartData]);
+
   return (
     <>
       <div className="navbar bg-base-100 shadow-xl px-10 fixed top-0 left-0 w-full z-50">
@@ -23,7 +73,7 @@ const Header = () => {
         <div className="flex-none">
           
           <div className="dropdown dropdown-end mr-5">
-            <Link to={"/cart"}>
+           { userData && <Link to={"/cart"}>
             <div
               tabIndex={0}
               role="button"
@@ -51,11 +101,11 @@ const Header = () => {
                 </div>
               
             </div>
-            </Link>
+            </Link>}
           </div>
 
 
-          <div className="dropdown dropdown-end">
+          {userData && <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
@@ -64,7 +114,7 @@ const Header = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src={userData?.userPhoto}
                 />
               </div>
             </div>
@@ -73,19 +123,16 @@ const Header = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
+                <a className="justify-between text-lg">
+                  Hello, {userData.userName}
+                  
                 </a>
               </li>
               <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a>Logout</a>
+                <button onClick={logout}>Logout</button>
               </li>
             </ul>
-          </div>
+          </div>}
         </div>
       </div>
     </>

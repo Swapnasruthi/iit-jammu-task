@@ -23,10 +23,12 @@ app.use(express.json());  //--> to read json data from the Db.
 
 const authRouter = require('./routes/auth');
 const cartRouter = require('./routes/cart');
+const orderRouter = require("./routes/order");
 
 
 app.use("/", authRouter);
 app.use("/", cartRouter);
+app.use("/orders", orderRouter);
 
 
 

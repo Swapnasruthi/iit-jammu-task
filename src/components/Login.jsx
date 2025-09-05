@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BACKEND_API } from "../utils/Contants";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("sruthi@gmail.com");
+  const [password, setPassword] = useState("sruthi@123");
   const [errorMsg, setErrorMsg] = useState();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -17,6 +20,7 @@ const Login = () => {
         { email, password },
         { withCredentials: true }
       );
+      dispatch(addUser(res.data));
       setErrorMsg("");
       return navigate("/");
     } catch (err) {

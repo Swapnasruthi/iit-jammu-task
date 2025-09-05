@@ -2,12 +2,15 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { BACKEND_API } from "../utils/Contants";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Register = () => {
   const [userName, setUserName] = useState("sruthi");
   const [email, setEmail] = useState("sruthi@gmail.com");
   const [password, setPassword] = useState("sruthi@123");
   const [errorMsg, setErrorMsg] = useState();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const handleRegister = async () => {
@@ -21,7 +24,7 @@ const Register = () => {
         },
         { withCredentials: true }
       );
-
+      dispatch(addUser(res.data));
       navigate("/");
       setErrorMsg("");
     } catch (err) {

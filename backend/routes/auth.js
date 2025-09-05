@@ -1,76 +1,95 @@
-const express = require('express');
+const express = require("express");
 
 const authRouter = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../model/user");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const { userAuth } = require("../middleware/auth");
 require("dotenv").config();
-
 
 authRouter.use(cookieParser());
 authRouter.use(express.json()); // to read json data from the db
 
-
-
 //register
-authRouter.post("/register", async(req, res) => {
-    try{
-        //validating the data
-        const {userName, email, password} = req.body;
+authRouter.post("/register", async (req, res) => {
+  try {
+    //validating the data
+    const { userName, email, password } = req.body;
 
-        //encrypting the password
+    //encrypting the password
 
-        const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, 10);
 
-        const user = new User({
-            userName, email, password:passwordHash
-        });
-        await user.save();
+    const user = new User({
+      userName,
+      email,
+      password: passwordHash,
+    });
+    await user.save();
 
-        const token = await jwt.sign({_id: user._id}, process.env.SECRET_CODE, {expiresIn: "1d"});
-        res.cookie("token", token);
+    const token = await jwt.sign({ _id: user._id }, process.env.SECRET_CODE, {
+      expiresIn: "1d",
+    });
+    res.cookie("token", token);
 
-        res.send(user);
-    }
-    catch(err){
-
-        res.status(400).send("error saving the user"+err.message);
-
-
-    }
+    res.send(user);
+  } catch (err) {
+    res.status(400).send("error saving the user" + err.message);
+  }
 });
 
+//login
 
-//login 
+authRouter.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-authRouter.post("/login", async(req, res) => {
-    try{
-        const {email, password} = req.body;
+    const user = await User.findOne({ email: email });
 
-        const user = await User.findOne({email:email});
-
-        if(!user){
-            throw new Error("User not Found");
-            
-        }
-        
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-
-        if(isPasswordValid){
-            const token = await jwt.sign({_id: user._id}, process.env.SECRET_CODE, {expiresIn: "1d"});
-            res.cookie("token", token);
-            res.send(user);
-
-        }
-        else{
-            throw new Error("Invalid Credentials!");
-        }
+    if (!user) {
+      throw new Error("User not Found");
     }
-    catch(err){
-        res.status(400).send("error logging in the user"+err.message);
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (isPasswordValid) {
+      const token = await jwt.sign({ _id: user._id }, process.env.SECRET_CODE, {
+        expiresIn: "1d",
+      });
+      res.cookie("token", token);
+      res.send(user);
+    } else {
+      throw new Error("Invalid Credentials!");
     }
-})
+  } catch (err) {
+    res.status(400).send("error logging in the user" + err.message);
+  }
+});
 
+//get a user
 
+authRouter.get("/getUser", userAuth, (req, res) => {
+  try {
+    const { token } = req.cookies;
+    res.send(req.User);
+  } catch (err) {
+    res.status(400).send("Error:" + err.message);
+  }
+});
+
+authRouter.post("/logout", (req, res) => {
+  try {
+    res.cookie(
+      "token",
+      {},
+      {
+        expires: new Date(Date.now()),
+      }
+    );
+    res.send("logout successfully!");
+  } catch (err) {
+    console.log("error while log out");
+  }
+});
 module.exports = authRouter;

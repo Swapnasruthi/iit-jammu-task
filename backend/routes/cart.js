@@ -70,7 +70,7 @@ cartRouter.get("/cart/:userId", userAuth, async (req, res) => {
 
 
 // Update quantity of a specific cart item
-cartRouter.put("/cart", async (req, res) => {
+cartRouter.put("/cart", userAuth, async (req, res) => {
   try {
     const { userId, name, quantity } = req.body;
 

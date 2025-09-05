@@ -1,14 +1,39 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartSlice";
+import {useSelector} from "react-redux"
+import axios from "axios";
+import { BACKEND_API } from "../utils/Contants";
 
 const VegCard = (data) => {
   // the data is coming from feed component as props named data.item
 
   const dispatch = useDispatch();
+  const userData = useSelector((store) => store.user);
 
-  const addVeggie = (item) =>{
-    dispatch(addItem(item));
+  const addVeggie = async(item) =>{
+    try{
+
+      const res = await axios.post(BACKEND_API + "/cart", {
+        userId: userData._id,
+        name: item.name,
+        brand: item.brand,
+        image: item.image,
+        weight: item.quantity.defaultUnit,
+        price: item.price.min,
+        originalPrice: item.price.max,
+        quantity: 1,
+      }, { withCredentials: true });
+
+
+      
+      dispatch(addItem(item));
+
+
+    }
+    catch(err){
+      console.error("Error adding item:", err);
+    }
   }
 
   return (
