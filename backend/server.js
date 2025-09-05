@@ -19,7 +19,9 @@ app.use(cors(
 ));
 
 
-// app.options('/*', cors());
+// app.use(cors({
+//     origin: "*"
+// }));
 app.use(cookieParser());
 app.use(express.json());  //--> to read json data from the Db.
 

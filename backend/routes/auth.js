@@ -57,7 +57,7 @@ authRouter.post("/login", async (req, res) => {
       const token = await jwt.sign({ _id: user._id }, process.env.SECRET_CODE, {
         expiresIn: "1d",
       });
-      
+
       res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // true on Render
@@ -86,16 +86,16 @@ authRouter.get("/getUser", userAuth, (req, res) => {
 
 authRouter.post("/logout", (req, res) => {
   try {
-    res.cookie(
-      "token",
-      {},
-      {
-        expires: new Date(Date.now()),
-      }
-    );
-    res.send("logout successfully!");
+    res.cookie("token", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      expires: new Date(0)
+    });
+    res.status(200).send("Logout successful!");
   } catch (err) {
-    console.log("error while log out");
+    console.log("Error while logging out", err);
+    res.status(500).send("Server error during logout");
   }
 });
 module.exports = authRouter;
