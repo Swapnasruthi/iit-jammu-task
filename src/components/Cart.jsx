@@ -55,7 +55,7 @@ const Cart = () => {
   }
 
   return (
-    <div>
+    <div className="mt-36">
       {cartData.items.length > 0 &&
         cartData.items.map((item) => {
           const count = quantities[item.id] || 1; // default to 1
@@ -65,7 +65,7 @@ const Cart = () => {
             <>
               <div
                 key={item.id}
-                className="flex flex-col flex-wrap justify-center items-center mt-14"
+                className="flex flex-col flex-wrap justify-center items-center mt-10"
               >
                 <div className="card card-border bg-base-300 w-2/4 flex flex-row px-5 border-b-amber-400 rounded-lg  ">
                   <div className="flex flex-col my-2">

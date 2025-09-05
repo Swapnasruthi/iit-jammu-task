@@ -1,15 +1,33 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BACKEND_API } from "../utils/Contants";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState();
 
+  const navigate = useNavigate();
+
+  const handlelogin = async () => {
+    try {
+      const res = await axios.post(
+        BACKEND_API + "/login",
+        { email, password },
+        { withCredentials: true }
+      );
+      setErrorMsg("");
+      return navigate("/");
+    } catch (err) {
+      setErrorMsg(err?.response?.data || "something wrong");
+      console.error(err);
+    }
+  };
 
   return (
-     <>
+    <>
       <div className="flex flex-col justify-center items-center m-auto mt-20 w-1/4 p-8 bg-base-300 rounded-4xl">
-       
         <div className="my-2 w-full">
           <fieldset className="fieldset w-full">
             <legend className="fieldset-legend text-lg">Email Id:</legend>
@@ -31,7 +49,7 @@ const Login = () => {
             <legend className="fieldset-legend text-lg">Password:</legend>
             <input
               value={password}
-              type="password "
+              type="password"
               className="input validator"
               required
               placeholder=" "
@@ -42,13 +60,15 @@ const Login = () => {
           </fieldset>
         </div>
         <div className="my-5 w-full">
-          <button className="btn btn-secondary w-full text-lg">Log In</button>
+          <button onClick={handlelogin} className="btn btn-secondary w-full text-lg">Log In</button>
         </div>
 
         <div>
           <p>
             new user?
-            <span className="underline cursor-pointer"><Link to={"/register"}> Register</Link></span>
+            <span className="underline cursor-pointer">
+              <Link to={"/register"}> Register</Link>
+            </span>
           </p>
         </div>
       </div>

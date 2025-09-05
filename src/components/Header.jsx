@@ -10,7 +10,7 @@ const Header = () => {
   // console.log(cartData?.items?.length);
   return (
     <>
-      <div className="navbar bg-base-100 shadow-xl px-10">
+      <div className="navbar bg-base-100 shadow-xl px-10 fixed top-0 left-0 w-full z-50">
         <div className="flex-1">
           <a className="btn btn-ghost text-xl">
             <span>
