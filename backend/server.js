@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors(
     {
-        origin:"http://localhost:5173",
+        origin:"https://iit-jammu-task.vercel.app",
         methods: ['GET', 'POST','PUT', 'PATCH', 'DELETE'],
         credentials:true
     }
