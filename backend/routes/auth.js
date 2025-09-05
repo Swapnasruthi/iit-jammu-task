@@ -57,7 +57,13 @@ authRouter.post("/login", async (req, res) => {
       const token = await jwt.sign({ _id: user._id }, process.env.SECRET_CODE, {
         expiresIn: "1d",
       });
-      res.cookie("token", token);
+      
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // true on Render
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      });
+
       res.send(user);
     } else {
       throw new Error("Invalid Credentials!");

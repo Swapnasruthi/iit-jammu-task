@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/database');
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(cors(
 
 
 // app.options('/*', cors());
+app.use(cookieParser());
 app.use(express.json());  //--> to read json data from the Db.
 
 const authRouter = require('./routes/auth');
