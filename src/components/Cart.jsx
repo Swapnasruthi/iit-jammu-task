@@ -13,7 +13,10 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [quantities, setQuantities] = useState({});
+  const [loading, setLoading] = useState(false);
   const userId = userData?._id;
+  const [errorMsg, setErrorMsg] = useState();
+  const [toast, setToast] = useState(false);
 
   useEffect(() => {
     if (userData?._id) {
@@ -26,6 +29,7 @@ const Cart = () => {
   //handling placeorder button click
   const placeOrder = async (req, res) => {
     try {
+      setLoading(true);
       const res = await axios.post(
         BACKEND_API + "/orders/place",
         {
@@ -39,7 +43,7 @@ const Cart = () => {
         }
       );
 
-       // Convert response data (PDF) into a Blob
+      // Convert response data (PDF) into a Blob
       const blob = new Blob([res.data], { type: "application/pdf" });
 
       // Create a temporary URL for the Blob
@@ -48,13 +52,20 @@ const Cart = () => {
       // Open the PDF in a new browser tab
 
       window.open(url);
-
-
-    } catch (err) {}
+      setLoading(false);
+    } catch (err) {
+      setErrorMsg(err?.response?.data || "something wrong");
+      setToast(true);
+      setLoading(false);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    }
   };
 
   const fetchCartItems = async () => {
     try {
+      setLoading(true);
       const res = await axios.get(BACKEND_API + "/cart/" + userId, {
         withCredentials: true,
       });
@@ -67,13 +78,22 @@ const Cart = () => {
 
         items.forEach((item) => dispatch(addItem(item)));
       }
+
+      setLoading(false);
     } catch (err) {
+      setErrorMsg(err?.response?.data || "something wrong");
+      setToast(true);
+      setLoading(false);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
       console.log("Failed to fetch cart items" + err.message);
     }
   };
 
   const updateQuantity = async (item, newQuantity) => {
     try {
+      setLoading(true);
       const res = await axios.put(
         BACKEND_API + "/cart",
         {
@@ -87,12 +107,22 @@ const Cart = () => {
       if (res) {
         fetchCartItems();
       }
+      setLoading(false);
     } catch (err) {
+      setErrorMsg(err?.response?.data || "something wrong");
+      setToast(true);
+      setLoading(false);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+
       console.log("Failed to update cart item" + err.message);
     }
   };
   const increment = (item) => {
+  
     updateQuantity(item, (item.quantity || 1) + 1);
+   
   };
 
   const decrement = (item) => {
@@ -110,6 +140,7 @@ const Cart = () => {
   //deleting item from cart
   const deleteItem = async (item) => {
     try {
+      setLoading(true);
       const res = await axios.delete(BACKEND_API + "/cart", {
         data: { userId, name: item.name },
         withCredentials: true,
@@ -117,10 +148,29 @@ const Cart = () => {
 
       dispatch(removeItem(item.id));
       fetchCartItems();
+      setLoading(false);
     } catch (err) {
+      setErrorMsg(err?.response?.data || "something wrong");
+      setToast(true);
+      setLoading(false);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
       console.error("Error removing item:", err);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-900/70 backdrop-blur-sm z-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="text-white text-lg font-semibold animate-bounce">
+            <span className="loading loading-ring loading-xl"></span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (cartData.items.length === 0) {
     return (
@@ -134,11 +184,17 @@ const Cart = () => {
   }
 
   return (
+    
     <div className="mt-36">
+      {toast && (
+        <div className="toast">
+          <div className="alert alert-error">
+            <span>{errorMsg}</span>
+          </div>
+        </div>
+      )}
       {cartData.items.length > 0 &&
         cartData.items.map((item) => {
-          // const count = quantities[item.id] || 1; // default to 1
-          // const totalPrice = item?.price * count;
 
           const totalPrice = item.price * (item.quantity ?? 1);
 
@@ -209,9 +265,10 @@ const Cart = () => {
           <p className="font-bold text-[#f4a04c] md:text-lg">
             Total: ₹{cartTotal}/-
           </p>
-          <button 
-          onClick={()=> placeOrder()}
-          className="bg-white shadow-xl rounded-lg p-3 mr-7 transition-all text-green-600 font-bold md:text-lg hover:scale-105">
+          <button
+            onClick={() => placeOrder()}
+            className="bg-white shadow-xl rounded-lg p-3 mr-7 transition-all text-green-600 font-bold md:text-lg hover:scale-105"
+          >
             {" "}
             Place order
           </button>

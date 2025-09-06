@@ -39,7 +39,7 @@ authRouter.post("/register", async (req, res) => {
 
     res.send(user);
   } catch (err) {
-    res.status(400).send("error saving the user" + err.message);
+    res.status(400).send( err.message);
   }
 });
 
@@ -73,7 +73,7 @@ authRouter.post("/login", async (req, res) => {
       throw new Error("Invalid Credentials!");
     }
   } catch (err) {
-    res.status(400).send("error logging in the user" + err.message);
+    res.status(400).send(err.message);
   }
 });
 
