@@ -6,9 +6,9 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Register = () => {
-  const [userName, setUserName] = useState("sruthi");
-  const [email, setEmail] = useState("sruthi@gmail.com");
-  const [password, setPassword] = useState("sruthi@123");
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState();
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(false);
