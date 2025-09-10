@@ -22,6 +22,10 @@ const Body = () => {
       setLoading(false);
       return navigate("/");
     }
+    else{
+      setLoading(false);
+      return navigate("/login");
+    }
     try {
       const res = await axios.get(BACKEND_API + "/getUser", {
         withCredentials: true,
